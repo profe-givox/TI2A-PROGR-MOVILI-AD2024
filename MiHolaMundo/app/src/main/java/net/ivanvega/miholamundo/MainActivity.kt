@@ -1,9 +1,11 @@
 package net.ivanvega.miholamundo
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,6 +18,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,27 +39,60 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
+@Composable
+fun OnboardingScreen (modifier: Modifier = Modifier){
+    var  shouldShowOnboarding: MutableState<Boolean> = remember {
+        mutableStateOf(true)
+    }
+    Column (
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+        Text(text = "Welcome to de basic compose lab")
+        Button(modifier = Modifier.padding(vertical = 24.dp) ,
+            onClick = {
+                 shouldShowOnboarding.value = false
+                /*TODO*/ }) {
+            Text(text = "Continue")
+        }
+    }
+
+}
+
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
+    //var expanded = false
+    val expanded = remember {
+        mutableStateOf(false)
+    }
+    val extraPadding = if (expanded.value) 48.dp else 0.dp
+
     Surface (color = MaterialTheme.colorScheme.primary
         , modifier = modifier.padding(vertical = 4.dp, horizontal = 8.dp)
     ) {
         Row (modifier = Modifier
             .padding(24.dp)) {
             Column (
-                modifier = Modifier.weight(1f)
+                modifier =
+                Modifier
+                    .weight(1f)
+                    .padding(bottom = extraPadding)
+
             ) {
-
-                Text(
-                    text = "Hello ",
-
+                Text(text = "Hello ",
                     )
-                Text(
-                    text = "$name!",
-                )
+                Text(text = "$name!",
+                    )
             }
-            ElevatedButton(onClick = { /*TODO*/ }) {
-                Text(text = "Boton")
+            ElevatedButton(
+                onClick = {
+                    expanded.value = !expanded.value
+                }
+            )
+            {
+                Text(text = if (expanded.value) "Show less" else "Show more"  )
             }
         }
 
@@ -68,11 +107,14 @@ fun MyApp(modifier: Modifier = Modifier,
         color = MaterialTheme.colorScheme.background) {
         Greeting(name = "PerroNegro")
     }*/
-    Column (modifier = modifier.padding(vertical = 20.dp)) {
+
+    OnboardingScreen()
+
+    /*Column (modifier = modifier.padding(vertical = 20.dp)) {
        for(name in names){
            Greeting(name = name)
        } 
-    }
+    }*/
 }
 @Preview(showBackground = true)
 @Composable
@@ -80,5 +122,14 @@ fun GreetingPreview() {
     MiHolaMundoTheme {
         //Greeting("Perro")
         MyApp()
+    }
+}
+
+
+@Preview
+@Composable
+fun PreviewOnborading(){
+    MiHolaMundoTheme {
+        OnboardingScreen()
     }
 }
