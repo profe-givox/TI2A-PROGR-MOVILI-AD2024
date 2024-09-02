@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.MaterialTheme
@@ -41,8 +43,10 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun OnboardingScreen (modifier: Modifier = Modifier){
-    var  shouldShowOnboarding: MutableState<Boolean> = remember {
+fun OnboardingScreen (modifier: Modifier = Modifier,
+                      onContinueClick: ()-> Unit
+                      ){
+    var  shouldShowOnboarding: MutableState<Boolean>  = remember {
         mutableStateOf(true)
     }
     Column (
@@ -52,13 +56,27 @@ fun OnboardingScreen (modifier: Modifier = Modifier){
         ) {
         Text(text = "Welcome to de basic compose lab")
         Button(modifier = Modifier.padding(vertical = 24.dp) ,
-            onClick = {
-                 shouldShowOnboarding.value = false
-                /*TODO*/ }) {
+            onClick = onContinueClick
+           ) {
             Text(text = "Continue")
         }
     }
 
+}
+
+@Composable
+fun Greetings(modifier: Modifier,
+              names: List<String> = List(1000,
+                  init = {
+                      "$it"
+                  }
+               )
+){
+    LazyColumn {
+        items(items = names){
+           Greeting(name = it)
+        }
+    }
 }
 
 @Composable
@@ -101,20 +119,32 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 }
 @Composable
 fun MyApp(modifier: Modifier = Modifier,
-          names: List<String> = listOf("World", "Android", "Compose")
+          names: List<String> = listOf("World", "Android", "Compose","oTRO", "maS", "mAS OTRO")
 ){
-    /*Surface(modifier=modifier,
+    var  shouldShowOnboarding: MutableState<Boolean> = remember {
+        mutableStateOf(true)
+    }
+
+    Surface(modifier=modifier,
         color = MaterialTheme.colorScheme.background) {
-        Greeting(name = "PerroNegro")
-    }*/
+        if (shouldShowOnboarding.value) {
+            OnboardingScreen(onContinueClick = {
+                shouldShowOnboarding.value = false
+            })
+        } else {
+            /*Column(modifier = modifier.padding(vertical = 20.dp)) {
+                for (name in names) {
+                    Greeting(name = name)
+                }
+            }*/
+            Greetings(modifier = modifier)
+        }
+    }
 
-    OnboardingScreen()
 
-    /*Column (modifier = modifier.padding(vertical = 20.dp)) {
-       for(name in names){
-           Greeting(name = name)
-       } 
-    }*/
+    //OnboardingScreen()
+
+
 }
 @Preview(showBackground = true)
 @Composable
@@ -130,6 +160,6 @@ fun GreetingPreview() {
 @Composable
 fun PreviewOnborading(){
     MiHolaMundoTheme {
-        OnboardingScreen()
+        //OnboardingScreen()
     }
 }
