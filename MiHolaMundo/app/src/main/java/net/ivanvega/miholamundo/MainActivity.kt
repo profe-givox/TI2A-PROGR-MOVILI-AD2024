@@ -23,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusModifier
@@ -121,7 +122,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 fun MyApp(modifier: Modifier = Modifier,
           names: List<String> = listOf("World", "Android", "Compose","oTRO", "maS", "mAS OTRO")
 ){
-    var  shouldShowOnboarding: MutableState<Boolean> = remember {
+    var  shouldShowOnboarding: MutableState<Boolean> = rememberSaveable{
         mutableStateOf(true)
     }
 
