@@ -1,6 +1,7 @@
 package net.ivanvega.miholamundo
 
 import android.annotation.SuppressLint
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -38,6 +39,8 @@ import androidx.compose.ui.unit.coerceAtLeast
 import androidx.compose.ui.unit.dp
 import net.ivanvega.miholamundo.ui.theme.MiHolaMundoTheme
 
+
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,7 +76,7 @@ fun OnboardingScreen (modifier: Modifier = Modifier,
 }
 
 @Composable
-fun Greetings(modifier: Modifier,
+fun Greetings(modifier: Modifier = Modifier,
               names: List<String> = List(1000,
                   init = {
                       "$it"
@@ -167,12 +170,19 @@ fun MyApp(modifier: Modifier = Modifier,
 
 
 }
-@Preview(showBackground = true)
+
+@Preview(
+    showBackground = true,
+    widthDp = 320,
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    name = "GreetingPreviewDark"
+)
+@Preview(showBackground = true, widthDp = 320)
 @Composable
 fun GreetingPreview() {
     MiHolaMundoTheme {
         //Greeting("Perro")
-        MyApp()
+        Greetings()
     }
 }
 
