@@ -17,8 +17,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ExpandLess
+import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material3.Button
 import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -33,6 +38,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusModifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.coerceAtLeast
@@ -65,7 +71,7 @@ fun OnboardingScreen (modifier: Modifier = Modifier,
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
         ) {
-        Text(text = "Welcome to de basic compose lab")
+        Text(text = stringResource(R.string.welcome_to_de_basic_compose_lab))
         Button(modifier = Modifier.padding(vertical = 24.dp) ,
             onClick = onContinueClick
            ) {
@@ -127,15 +133,29 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
                             fontWeight = FontWeight.ExtraBold
                         )
                     )
+                if (expanded) {
+                    Text(
+                        text = ("Composem ipsum color sit lazy, " +
+                                "padding theme elit, sed do bouncy. ").repeat(4),
+                    )
+                }
             }
-            ElevatedButton(
+            val contentDescription = if (expanded) stringResource(R.string.show_less) else stringResource(
+                R.string.show_more
+            )
+            IconButton(onClick = { expanded = !expanded }) {
+                Icon(
+                    imageVector = if (expanded) Icons.Filled.ExpandLess else Icons.Filled.ExpandMore
+                    , contentDescription = contentDescription)
+            }
+            /*ElevatedButton(
                 onClick = {
                     expanded = !expanded
                 }
             )
             {
                 Text(text = if (expanded) "Show less" else "Show more"  )
-            }
+            }*/
         }
 
 
@@ -164,11 +184,7 @@ fun MyApp(modifier: Modifier = Modifier,
             Greetings(modifier = modifier)
         }
     }
-
-
     //OnboardingScreen()
-
-
 }
 
 @Preview(

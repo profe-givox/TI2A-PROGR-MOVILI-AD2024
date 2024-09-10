@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MiHolaMundo Spanish</string>
+    <string name="show_less">MOstrar menos</string>
+    <string name="show_more">Mostrar mas</string>
+    <string name="welcome_to_de_basic_compose_lab">Binevendos a labpratrio basico de compose</string>
+</resources>
