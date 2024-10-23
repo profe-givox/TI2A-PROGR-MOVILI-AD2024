@@ -48,6 +48,11 @@ class ItemEntryViewModel (private val itemsRepository: ItemsRepository) : ViewMo
             name.isNotBlank() && price.isNotBlank() && quantity.isNotBlank()
         }
     }
+    suspend fun saveItem() {
+        if (validateInput()) {
+            itemsRepository.insertItem(itemUiState.itemDetails.toItem())
+        }
+    }
 }
 
 /**
