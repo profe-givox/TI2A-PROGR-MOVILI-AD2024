@@ -34,6 +34,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val uri = ComposeFileProvider.getImageUri(applicationContext)
+        intent.getStringExtra("action")
         setContent {
             MiAppTakePhotoVideoComposeTheme {
                 // A surface container using the 'background' color from the theme
@@ -42,10 +43,10 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//                        AlarmasScreen(
-//                            alarmScheduler = AlarmSchedulerImpl(applicationContext))
+                        AlarmasScreen(
+                            alarmScheduler = AlarmSchedulerImpl(applicationContext))
                     }
-                    ImagePicker()
+                    //ImagePicker()
                     /*GrabarAudioScreen(
                         onClickStGra = {
                             File(cacheDir, "audio.mp3").also {

@@ -45,7 +45,7 @@ import java.io.FileOutputStream
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun GrabarAudioScreen( onClickStGra: () -> Unit,
+fun     GrabarAudioScreen( onClickStGra: () -> Unit,
                        onClickSpGra: () -> Unit,
                        onClickStRe: () -> Unit,
                        onClickSpRe: () -> Unit,){
@@ -84,8 +84,9 @@ fun GrabarAudioScreen( onClickStGra: () -> Unit,
                 onClickStGra,
                 onClickSpGra,
                 onClickStRe,
-                onClickSpRe
-            ) {
+                onClickSpRe,
+                onClick =
+                    {
                 if (recordAudioPermissionState.status.shouldShowRationale) {
                     rationaleState = RationaleState(
                         "Permiso para grabar audio",
@@ -99,7 +100,7 @@ fun GrabarAudioScreen( onClickStGra: () -> Unit,
                 } else {
                     recordAudioPermissionState.launchPermissionRequest()
                 }
-            }
+            })
 
         }
     }
@@ -193,6 +194,8 @@ class AndroidAudioRecorder(
             MediaRecorder(context)
         } else MediaRecorder()
     }
+
+
 
     override fun start(outputFile: File) {
         createRecorder().apply {

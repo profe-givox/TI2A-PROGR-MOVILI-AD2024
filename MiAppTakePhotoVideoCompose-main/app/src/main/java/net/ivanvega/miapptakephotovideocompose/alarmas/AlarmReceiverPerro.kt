@@ -35,6 +35,7 @@ import androidx.core.app.NotificationCompat
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
+import net.ivanvega.miapptakephotovideocompose.MainActivity
 import net.ivanvega.miapptakephotovideocompose.R
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -118,6 +119,14 @@ fun AlarmasScreen( alarmScheduler: AlarmScheduler){
 
 class AlarmReceiverPerro : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
+
+        Log.d("ALARMAACTIVA", "Se activo")
+        var intentA = Intent(context, MainActivity::class.java)
+        intentA.putExtra("action", 1)
+        intentA.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+
+        val pI =
+            PendingIntent.getActivity(context,  0,  intentA, PendingIntent.FLAG_IMMUTABLE)
         val message = intent?.getStringExtra("EXTRA_MESSAGE") ?: return
         val channelId = "alarm_id"
         context?.let { ctx ->
@@ -128,6 +137,7 @@ class AlarmReceiverPerro : BroadcastReceiver() {
                 .setContentTitle("Alarm Demo")
                 .setContentText("Notification sent with message $message")
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setContentIntent(pI)
             notificationManager.notify(1, builder.build())
         }
 
